@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../templates/template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+        <p:growl id="alertas" autoUpdate="true"/>
+        <h:form id="frmMain">
+             <p:panelGrid columns="2">
+                <p:outputLabel value="Descipcion del beneficio :"/>
+                <p:inputText value="#{jSFManagedAdm.admBeneficio.descripcion}"/>
+                <h:outputText value="Puntos descontados por beneficio :"/>
+                <p:inputText value="#{jSFManagedAdm.admBeneficio.puntos}"/>
+                <p:commandButton 
+                value="Grabar" 
+                id="btnGrabar" 
+                action="#{jSFManagedAdm.crearAdmBen()}"
+                update="datosTabla"
+                />
+            </p:panelGrid>
+            <p:separator/>
+            <p:dataTable
+                id="datosTabla"
+                var="idx_fila"
+                value="#{jSFManagedAdm.listaAdmBen}"
+                rows="3"
+                paginator="true"
+            >
+                <p:column  headerText="Código" >
+                    <h:outputText value="#{idx_fila.id}"/>                            
+                </p:column>
+                <p:column
+                    headerText="Descripción de la donación"
+                    filterBy="#{idx_fila.descripcion}"
+                    >
+                    <h:outputText value="#{idx_fila.descripcion}"/>                            
+                </p:column>
+                <p:column
+                    headerText="Puntos a recibir por la donación"
+                    filterBy="#{idx_fila.puntos}"
+                    sortBy="#{idx_fila.puntos}"
+                    >
+                    <h:outputText value="#{idx_fila.puntos}"/>                            
+                </p:column>
+                <p:column headerText="Modificar" >
+                    <!--p:commandLink value="modificar"
+                                   actionListener=""
+                                   oncomplete="PF('wdlgDatos').show();"
+                                   update=":dlgDatos"
+                                   /-->
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <p:dialog header="Datos" widgetVar="wdlgDatos" id="dlgDatos">
+            <h:form>
+                <p:panelGrid columns="2">
+                <h:outputText value="Nombre :"/>
+                <p:inputText value="#{jSFManagedAdm.admBeneficio.descripcion}"/>
+                <h:outputText value="Apellido :"/>
+                <p:inputText value="#{jSFManagedAdm.admBeneficio.puntos}"/>
+                    <p:commandButton 
+                        value="Modificar" 
+                    />
+                    <p:commandButton 
+                        value="Cancelar" 
+                    />
+                </p:panelGrid>
+            </h:form>    
+        </p:dialog>
+    </ui:define>
+
+    <ui:define name="bottom">
+        Refugios
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../templates/template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <p:separator />
+        <h:form>
+            <p:messages id="mensajes" autoUpdate="false" />
+            <p:fieldset legend="Datos personales">
+                <h:panelGrid columns="3" id="pgAdmin">
+                    <p:outputLabel for="txtNom" value="Nombre" />
+                    <p:inputText id="txtNom" value="#{jSFManagedAdm.usuario.nombre}" required="true" />
+                    <p:message for="txtNom" />
+                    <p:outputLabel for="txtDir" value="Dirección" />
+                    <p:inputText id="txtDir" value="#{jSFManagedAdm.usuario.direccion}" required="true" />
+                    <p:message for="txtDir" />
+                    <p:outputLabel for="dateUsr" value="Fecha Creación" />
+                    <p:calendar id="dateUsr"
+                                value="#{jSFManagedAdm.usuario.fechaCreacion}"
+                                locale="es"
+                                required="true"
+                                requiredMessage="Campo requerido"
+                    />
+                    <p:message for="dateUsr" />
+                </h:panelGrid>
+            </p:fieldset>
+            <p:separator />
+            <p:fieldset legend="Acceso a cuenta">
+                <h:panelGrid columns="3" id="pgUser">
+                    <p:outputLabel for="txtUsr" value="Usuario" />
+                    <p:inputText
+                        id="txtUsr"
+                        value="#{jSFManagedAdm.usuario.usuario}"
+                        required="true"
+                        requiredMessage="Campo requerido"
+                    />
+                    <p:message for="txtUsr" />
+                    <p:outputLabel for="pass_1" value="Contraseña" />
+                    <p:password
+                        id="pass_1"
+                        value="#{jSFManagedAdm.usuario.pass}"
+                        match="pass_2"
+                        feedback="true"
+                        promptLabel="Debe ingresar una contraseña"
+                        validatorMessage="Las contraseñas no coinciden"
+                        weakLabel="Dèbil"
+                        strongLabel="Fuerte"
+                        goodLabel="Bueno"
+                        required="true"
+                        requiredMessage="Campo requerido"
+                    />
+                    <p:message for="pass_1" />
+                    <p:outputLabel for="pass_2" value="Repetir contraseña" />
+                    <p:password id="pass_2" required="true" requiredMessage="Campo requerido" />
+                    <p:message for="pass_2" />
+                </h:panelGrid>
+            </p:fieldset>
+            <p:separator />
+            <p:fieldset legend="Activo">
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="Estado" />
+                    <p:selectBooleanCheckbox value="#{jSFManagedAdm.administrador.activo}" />
+                </h:panelGrid>
+            </p:fieldset>
+            <p:separator />
+            <p:commandButton
+                icon="ui-icon-check"
+                value="registrar"
+                update="pgAdmin, pgUser"
+                actionListener="#{jSFManagedAdm.crearAdministrador()}"
+            />
+        </h:form>
+        <h:outputScript library="js" name="spanishLocale.js" />
+    </ui:define>
+
+    <ui:define name="bottom">
+        Administracion de administradores de sistema
+    </ui:define>
+
+</ui:composition>
