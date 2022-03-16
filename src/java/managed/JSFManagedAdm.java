@@ -8,9 +8,13 @@ package managed;
 import ejb.AdmBeneficioFacadeLocal;
 import ejb.AdmDonacionFacadeLocal;
 import ejb.AdministradorFacadeLocal;
+import ejb.DonadorFacadeLocal;
+import ejb.RefugioFacadeLocal;
 import entidades.AdmBeneficio;
 import entidades.AdmDonacion;
 import entidades.Administrador;
+import entidades.Donador;
+import entidades.Refugio;
 import entidades.Usuario;
 import java.io.Serializable;
 import java.util.List;
@@ -45,6 +49,16 @@ public class JSFManagedAdm implements Serializable{
     private List<Administrador> listaAdministrador;
     private Usuario usuario;
     
+    @EJB
+    private RefugioFacadeLocal manRefugio;
+    private Refugio refugio;
+    private List<Refugio> listaRefugios;
+    
+    @EJB
+    private DonadorFacadeLocal manDonador;
+    private Donador donador;
+    private List<Donador> listaDonadores;
+    
     /**
      * Creates a new instance of JSFManagedAdm
      */
@@ -59,10 +73,16 @@ public class JSFManagedAdm implements Serializable{
         admDonacion = new AdmDonacion();
         administrador = new Administrador();
         usuario = new Usuario();
+        refugio = new Refugio();
+        donador = new Donador();
         listarAdministradores();
         listarAdmDonaciones();
         listarAdmBeneficios();
+        listarRefugios();
+        listarDonadores();
         incrementoAdm();
+        incrementoRef();
+        incrementoDon();
     }
 
     // Get y set de atributos
@@ -122,17 +142,71 @@ public class JSFManagedAdm implements Serializable{
         this.usuario = usuario;
     }
     
+    public Refugio getRefugio() {
+        return refugio;
+    }
+
+    public void setRefugio(Refugio refugio) {
+        this.refugio = refugio;
+    }
+
+    public List<Refugio> getListaRefugios() {
+        return listaRefugios;
+    }
+
+    public void setListaRefugios(List<Refugio> listaRefugios) {
+        this.listaRefugios = listaRefugios;
+    }
+    
+    public Donador getDonador() {
+        return donador;
+    }
+
+    public void setDonador(Donador donador) {
+        this.donador = donador;
+    }
+
+    public List<Donador> getListaDonadores() {
+        return listaDonadores;
+    }
+
+    public void setListaDonadores(List<Donador> listaDonadores) {
+        this.listaDonadores = listaDonadores;
+    }
+    
     // Operaciones CRUD
     public void crearAdmBen () {
-        manAdmBeneficio.create(admBeneficio);
-        admBeneficio = new AdmBeneficio();
-        listarAdmBeneficios();
+        try {
+            manAdmBeneficio.create(admBeneficio);
+            admBeneficio = new AdmBeneficio();
+            listarAdmBeneficios();
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se registró exitosamente")
+            );
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Se ha presentado un error")
+            );
+        }
     }
 
     public void crearAdmDon () {
-        manAdmDonacion.create(admDonacion);
-        admDonacion = new AdmDonacion();
-        listarAdmDonaciones();
+        try {
+            manAdmDonacion.create(admDonacion);
+            admDonacion = new AdmDonacion();
+            listarAdmDonaciones(); 
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se registró exitosamente")
+            );
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Se ha presentado un error")
+            );
+        }
     }
     
     public void crearAdministrador () {
@@ -154,6 +228,47 @@ public class JSFManagedAdm implements Serializable{
             );
         }
     }
+    
+    public void crearRefugio () {
+        try {
+            usuario.setId(refugio.getId());
+            refugio.setUsuario(usuario);
+            manRefugio.create(refugio);
+            refugio = new Refugio();
+            usuario = new Usuario();
+            listarRefugios();
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se registró exitosamente")
+            );
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Se ha presentado un error")
+            );
+        }
+    }
+    
+    public void crearDonador () {
+        try {
+            usuario.setId(donador.getId());
+            donador.setUsuario(usuario);
+            manDonador.create(donador);
+            donador = new Donador();
+            usuario = new Usuario();
+            listarDonadores();
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se registró exitosamente")
+            );
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Se ha presentado un error")
+            );
+        }
+    }
+    
     // Operaciones listas
     public void listarAdmBeneficios () {
         setListaAdmBen(manAdmBeneficio.findAll());
@@ -167,6 +282,14 @@ public class JSFManagedAdm implements Serializable{
         setListaAdministrador(manAdministrador.findAll());
     }
     
+    public void listarRefugios () {
+        setListaRefugios(manRefugio.findAll());
+    }
+    
+    public void listarDonadores () {
+        setListaDonadores(manDonador.findAll());
+    }
+    
     public void incrementoAdm () {
         Administrador temp = listaAdministrador.get(listaAdministrador.size()-1);
         String aux = String.valueOf(Integer.valueOf(temp.getId().substring(3))+1);
@@ -176,6 +299,27 @@ public class JSFManagedAdm implements Serializable{
         }
         administrador.setId("ADM"+cero+aux);
         administrador.setActivo(Boolean.TRUE);
+    }
+    
+    public void incrementoRef () {
+        Refugio temp = listaRefugios.get(listaRefugios.size()-1);
+        String aux = String.valueOf(Integer.valueOf(temp.getId().substring(3))+1);
+        String cero = "";
+        for (int i = 0; i < 12 - aux.length(); i++) {
+            cero += "0";
+        }
+        refugio.setId("REF"+cero+aux);
+    }
+    
+    public void incrementoDon () {
+        Donador temp = listaDonadores.get(listaDonadores.size()-1);
+        String aux = String.valueOf(Integer.valueOf(temp.getId().substring(3))+1);
+        String cero = "";
+        for (int i = 0; i < 12 - aux.length(); i++) {
+            cero += "0";
+        }
+        donador.setId("DON"+cero+aux);
+        donador.setPuntos(0);
     }
 
 }

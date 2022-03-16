@@ -49,15 +49,15 @@ public class Donador implements Serializable {
     private String apellido;
     @Column(name = "puntos")
     private Integer puntos;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "donador")
+    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    private Usuario usuario;
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "donador")
     private Collection<Donaciones> donacionesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "donador")
     private Collection<DonadorRefugio> donadorRefugioCollection;
-    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Usuario usuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "donador")
-    private Collection<Beneficios> beneficiosCollection;
+    private Collection<Beneficios> beneficiosCollection;*/
 
     public Donador() {
     }
@@ -90,6 +90,23 @@ public class Donador implements Serializable {
         this.puntos = puntos;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    /*@XmlTransient
+    public Collection<Beneficios> getBeneficiosCollection() {
+        return beneficiosCollection;
+    }
+
+    public void setBeneficiosCollection(Collection<Beneficios> beneficiosCollection) {
+        this.beneficiosCollection = beneficiosCollection;
+    }
+
     @XmlTransient
     public Collection<Donaciones> getDonacionesCollection() {
         return donacionesCollection;
@@ -106,25 +123,8 @@ public class Donador implements Serializable {
 
     public void setDonadorRefugioCollection(Collection<DonadorRefugio> donadorRefugioCollection) {
         this.donadorRefugioCollection = donadorRefugioCollection;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    @XmlTransient
-    public Collection<Beneficios> getBeneficiosCollection() {
-        return beneficiosCollection;
-    }
-
-    public void setBeneficiosCollection(Collection<Beneficios> beneficiosCollection) {
-        this.beneficiosCollection = beneficiosCollection;
-    }
-
+    }*/
+    
     @Override
     public int hashCode() {
         int hash = 0;

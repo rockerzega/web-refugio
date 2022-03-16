@@ -46,15 +46,15 @@ public class Refugio implements Serializable {
     @Size(max = 50)
     @Column(name = "h_atencion")
     private String hAtencion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "refugio")
-    private Collection<Donaciones> donacionesCollection;
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "refugio")
+    private Collection<Donaciones> donacionesCollection; */
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(cascade = CascadeType.ALL)
     private Usuario usuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "refugio")
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "refugio")
     private Collection<DonadorRefugio> donadorRefugioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "refugio")
-    private Collection<Beneficios> beneficiosCollection;
+    private Collection<Beneficios> beneficiosCollection;*/
 
     public Refugio() {
     }
@@ -79,14 +79,14 @@ public class Refugio implements Serializable {
         this.hAtencion = hAtencion;
     }
 
-    @XmlTransient
+    /*@XmlTransient
     public Collection<Donaciones> getDonacionesCollection() {
         return donacionesCollection;
     }
 
     public void setDonacionesCollection(Collection<Donaciones> donacionesCollection) {
         this.donacionesCollection = donacionesCollection;
-    }
+    }*/
 
     public Usuario getUsuario() {
         return usuario;
@@ -96,7 +96,7 @@ public class Refugio implements Serializable {
         this.usuario = usuario;
     }
 
-    @XmlTransient
+    /*@XmlTransient
     public Collection<DonadorRefugio> getDonadorRefugioCollection() {
         return donadorRefugioCollection;
     }
@@ -112,7 +112,7 @@ public class Refugio implements Serializable {
 
     public void setBeneficiosCollection(Collection<Beneficios> beneficiosCollection) {
         this.beneficiosCollection = beneficiosCollection;
-    }
+    }*/
 
     @Override
     public int hashCode() {
