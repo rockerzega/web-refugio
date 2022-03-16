@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../templates/template.xhtml"
+                template="./../../templates/template_priv.xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html">
 
     <ui:define name="content">
-         <p:growl id="alertas" autoUpdate="true"/>
+        <p:growl id="alertas" autoUpdate="true"/>
         <h:form id="frmMain">
              <p:panelGrid columns="2">
-                <p:outputLabel value="Descipcion de la donación :"/>
-                <p:inputText value="#{jSFManagedAdm.admDonacion.descripcion}"/>
-                <h:outputText value="Puntos a recibir por la donación :"/>
-                <p:inputText value="#{jSFManagedAdm.admDonacion.puntos}"/>
+                <p:outputLabel value="Descipcion del beneficio :"/>
+                <p:inputText value="#{jSFManagedAdm.admBeneficio.descripcion}"/>
+                <h:outputText value="Puntos descontados por beneficio :"/>
+                <p:inputText value="#{jSFManagedAdm.admBeneficio.puntos}"/>
                 <p:commandButton 
                 value="Grabar" 
                 id="btnGrabar" 
-                action="#{jSFManagedAdm.crearAdmDon()}"
+                action="#{jSFManagedAdm.crearAdmBen()}"
                 update="datosTabla"
                 />
             </p:panelGrid>
@@ -24,7 +24,7 @@
             <p:dataTable
                 id="datosTabla"
                 var="idx_fila"
-                value="#{jSFManagedAdm.listaAdmDon}"
+                value="#{jSFManagedAdm.listaAdmBen}"
                 rows="3"
                 paginator="true"
             >
@@ -57,9 +57,9 @@
             <h:form>
                 <p:panelGrid columns="2">
                 <h:outputText value="Nombre :"/>
-                <p:inputText value="#{jSFManagedAdm.admDonacion.descripcion}"/>
+                <p:inputText value="#{jSFManagedAdm.admBeneficio.descripcion}"/>
                 <h:outputText value="Apellido :"/>
-                <p:inputText value="#{jSFManagedAdm.admDonacion.puntos}"/>
+                <p:inputText value="#{jSFManagedAdm.admBeneficio.puntos}"/>
                     <p:commandButton 
                         value="Modificar" 
                     />
@@ -72,7 +72,7 @@
     </ui:define>
 
     <ui:define name="bottom">
-        Administrador de Donaciones 
+        Refugios
     </ui:define>
 
 </ui:composition>

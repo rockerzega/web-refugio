@@ -16,6 +16,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -141,8 +143,15 @@ public class JSFManagedAdm implements Serializable{
             administrador = new Administrador();
             usuario = new Usuario();
             listarAdministradores();
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se registró exitosamente")
+            );
         } catch (Exception ex) {
-            // mensaje de error
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Se ha presentado un error")
+            );
         }
     }
     // Operaciones listas

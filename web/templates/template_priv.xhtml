@@ -4,13 +4,15 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      >
+          
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link href="./../resources/css/default.css" rel="stylesheet" type="text/css" />
         <link href="./../resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
         <title>Facelets Template</title>
+        <f:event type="preRenderView" listener="#{controlSesion.verificarSesion()}" />
     </h:head>
 
     <h:body>
@@ -19,12 +21,21 @@
             <div id="container">
                 <h:form>  
                     <p:growl id="messages"/>
-
-                    <p:menubar>
-                        <p:submenu label="Administración" icon="pi pi-file">
-                            <p:menuitem value="Iniciar Sesion" url="/faces/pages/login.xhtml" />
-                        </p:submenu>
-                        
+                    <p:menubar model="#{managedMenu.model}">
+                        <p:menuitem value="Iniciar Sesion" url="/faces/pages/protegido/principal.xhtml" />
+                        <f:facet name="options">
+                            <p:commandButton
+                                value="A casa"
+                                action="/faces/pages/protegido/principal?faces-redirect=true"
+                                ajax="false"
+                            />
+                            <p:commandButton
+                                actionListener="#{managedMenu.cerrarSesion()}"
+                                icon="ui-icon-power"
+                                title="Cerrar sesión"
+                                action="/principal?faces-redirect=true"
+                            />
+                        </f:facet>
                     </p:menubar>
                 </h:form>
             </div>
