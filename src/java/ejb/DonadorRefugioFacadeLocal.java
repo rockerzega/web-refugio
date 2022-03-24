@@ -30,4 +30,6 @@ public interface DonadorRefugioFacadeLocal {
 
     int count();
     
+    public List<DonadorRefugio> obtenerDonadores (String refugio);
+    
 }
