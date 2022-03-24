@@ -44,11 +44,11 @@ public class DonadorRefugio implements Serializable {
     @Column(name = "fec_susc")
     @Temporal(TemporalType.DATE)
     private Date fecSusc;
-    @JoinColumn(name = "donador", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "donador")
     private Donador donador;
-    @JoinColumn(name = "refugio", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "refugio")
     private Refugio refugio;
 
     public DonadorRefugio() {

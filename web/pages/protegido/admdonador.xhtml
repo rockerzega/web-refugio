@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../templates/template_priv.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <p:separator />
+        <h:form>
+            <!-- pueden cambiarlo con growl pero es cuestion de estilos -->
+            <p:messages
+                id="mensajes"
+                autoUpdate="false"
+                severity="info, fatal"
+                showSummary="true"
+                showDetail="true"
+            />
+            <p:dataTable
+                id="datosTabla"
+                var="idx_fila"
+                value="#{managedProtect.listaDonadores}"
+                rows="3"
+                paginator="true"
+            >
+                <p:column
+                    headerText="Nombre"
+                    filterBy="#{idx_fila.usuario.nombre}"
+                    sortBy="#{idx_fila.usuario.nombre}"
+                >
+                    <h:outputText value="#{idx_fila.usuario.nombre}"/>                            
+                </p:column>
+                <p:column
+                    headerText="Apellido"
+                    filterBy="#{idx_fila.apellido}"
+                    sortBy="#{idx_fila.apellido}"
+                >
+                    <h:outputText value="#{idx_fila.apellido}"/>                            
+                </p:column>
+                <p:column
+                    headerText="Dirección"
+                    filterBy="#{idx_fila.usuario.direccion}"
+                    sortBy="#{idx_fila.usuario.direccion}"
+                >
+                    <h:outputText value="#{idx_fila.usuario.direccion}"/>                            
+                </p:column>
+                <p:column
+                    headerText="Fecha creación"
+                    filterBy="#{idx_fila.usuario.fechaCreacion}"
+                    sortBy="#{idx_fila.usuario.fechaCreacion}"
+                >
+                    <h:outputText value="#{idx_fila.usuario.fechaCreacion}">
+                        <f:convertDateTime pattern="dd/MMMM/yyy" />
+                    </h:outputText>                            
+                </p:column>
+                <p:column
+                    headerText="Puntos"
+                    filterBy="#{idx_fila.puntos}"
+                    sortBy="#{idx_fila.puntos}"
+                >
+                    <h:outputText value="#{idx_fila.puntos}"/>                            
+                </p:column>
+                <p:column
+                    headerText="Usuario"
+                    filterBy="#{idx_fila.usuario.usuario}"
+                    sortBy="#{idx_fila.usuario.usuario}"
+                >
+                    <h:outputText value="#{idx_fila.usuario.usuario}"/>                            
+                </p:column>
+                <p:column headerText="Modificar" >
+                    <!--p:commandLink value="modificar"
+                                   actionListener=""
+                                   oncomplete="PF('wdlgDatos').show();"
+                                   update=":dlgDatos"
+                                   /-->
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h:outputScript library="js" name="spanishLocale.js" />
+    </ui:define>
+
+    <ui:define name="bottom">
+        Administrar Donadores
+    </ui:define>
+
+</ui:composition>

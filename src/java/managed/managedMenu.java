@@ -67,6 +67,7 @@ public class managedMenu implements Serializable {
             } else {
                 if(m.getSubmenu() == null && user.getId().startsWith(m.getTipoUsr())){    
                     DefaultMenuItem item = new DefaultMenuItem(m.getNombre());
+                    item.setUrl(m.getUrl());
                     model.addElement(item);
                 }
             }
@@ -75,8 +76,5 @@ public class managedMenu implements Serializable {
 
     public void cerrarSesion () {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-    }
-    public String aCasa () {
-        return "/pages/protegido/principal?faces-redirect=true";
     }
 }
